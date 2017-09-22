@@ -1,0 +1,41 @@
+CREATE TABLE todo(
+ id SERIAL PRIMARY KEY NOT NULL,
+ title VARCHAR(100) NOT NULL,
+ details text NULL,
+ priority INTEGER NOT NULL DEFAULT 1,
+ created_at TIMESTAMP NOT NULL,
+ completed_at TIMESTAMP NULL
+);
+
+INSERT INTO todo (id,title, details, priority, created_at, completed_at)
+    VALUES
+      (DEFAULT,'Husking Corn', 'who knows why we bought corn',1,'2017-2-2 12:00:00','2017-2-2 13:00:00'),
+       (DEFAULT,'Eating Corn', 'who knows why we bought corn',7,'2017-3-3 12:00:00',NULL),
+       (DEFAULT,'Cutting Corn', 'who knows why we bought corn',1,'2017-4-4 12:00:00','2017-4-4 13:00:00'),
+       (DEFAULT,'Boiling Corn', 'who knows why we bought corn',1,'2017-5-5 12:00:00','2017-5-5 13:00:00'),
+       (DEFAULT,'Grilling Corn', 'who knows why we bought corn',1,'2017-6-6 12:00:00','2017-6-6 13:00:00'),
+       (DEFAULT,'Fighting Corn', 'who knows why we bought corn',5,'2017-7-7 12:00:00',NULL),
+       (DEFAULT,'Summoning Corn', 'who knows why we bought corn',1,'2017-6-6 12:00:00','2017-6-6 13:00:00'),
+       (DEFAULT,'Stalking Corn', 'who knows why we bought corn',1,'2017-6-6 12:00:00','2017-6-6 13:00:00'),
+       (DEFAULT,'Chasing Corn', 'who knows why we bought corn',1,'2017-10-10 12:00:00',NULL ),
+       (DEFAULT,'Cornering Corn', 'who knows why we bought corn',1,'2017-11-11 12:00:00','2017-11-11 13:00:00'),
+       (DEFAULT,'Killing Corn', 'who knows why we bought corn',1,'2017-12-12 12:00:00',NULL ),
+       (DEFAULT,'Chopping Corn', 'who knows why we bought corn',1,'2017-1-1 12:00:00','2017-1-1 13:00:00'),
+       (DEFAULT,'Burning Corn', 'who knows why we bought corn',3,'2017-2-1 12:00:00',NULL),
+       (DEFAULT,'Burying Corn', 'who knows why we bought corn',1,'2017-3-2 12:00:00','2017-3-2 13:00:00'),
+       (DEFAULT,'Luring Corn', 'who knows why we bought corn',3,'2017-4-3 12:00:00','2017-4-3 13:00:00'),
+       (DEFAULT,'Laughing Corn', 'who knows why we bought corn',3,'2017-5-4 12:00:00',NULL ),
+       (DEFAULT,'Rainbow Corn', 'who knows why we bought corn',1,'2017-6-5 12:00:00','2017-6-5 13:00:00'),
+       (DEFAULT,'Unicorn Corn', 'who knows why we bought corn',1,'2017-7-6 12:00:00','2017-7-6 13:00:00'),
+       (DEFAULT,'Red Corn', 'who knows why we bought corn',3,'2017-8-7 12:00:00',NULL ),
+       (DEFAULT,'Blue Corn', 'who knows why we bought corn',3,'2017-9-8 12:00:00',NULL);
+
+SELECT * FROM todo WHERE priority = 3 AND completed_at IS NULL;
+
+
+-- DESC lets you control the order for whatever it is you're searching for, in this case the order of priority (lowest at the top highest at the bottom)
+SELECT priority, COUNT(*)FROM todo WHERE completed_at IS NULL GROUP BY priority ORDER BY COUNT(*) DESC;
+
+SELECT priority, COUNT(*) FROM todo WHERE created_at > now() - INTERVAL '30' day GROUP BY priority;
+
+SELECT * FROM todo WHERE created_at =(SELECT min(created_at) FROM todo WHERE priority = 7 AND completed_at IS NULL);
